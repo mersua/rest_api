@@ -32,8 +32,8 @@ class Orders
      * @Assert\Length(
      *      min = 5,
      *      max = 255,
-     *      minMessage = "Item's name must be at least {{ limit }} characters long",
-     *      maxMessage = "Item's name cannot be longer than {{ limit }} characters"
+     *      minMessage = "Order's name must be at least {{ limit }} characters long",
+     *      maxMessage = "Order's name cannot be longer than {{ limit }} characters"
      * )
      * @Assert\NotNull(
      *     message = "Name should not be null"
@@ -115,15 +115,9 @@ class Orders
      * @ORM\ManyToMany(targetEntity="Item")
      * @ORM\JoinTable(name="orders_items",
      *      joinColumns={@ORM\JoinColumn(name="order_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")}
      * )
      *
-     * @Assert\Collection(
-     *     fields={
-     *         "name"  = @Assert\Required(@Assert\NotBlank),
-     *         "price" = @Assert\Required(@Assert\NotBlank)
-     *     }
-     * )
      * @Assert\Count(
      *      min = 1,
      *      max = 1000,
@@ -287,11 +281,11 @@ class Orders
     /**
      * Set user
      *
-     * @param integer $user
+     * @param User $user
      *
      * @return Orders
      */
-    public function setUser($user)
+    public function setUser(User $user)
     {
         $this->user = $user;
 

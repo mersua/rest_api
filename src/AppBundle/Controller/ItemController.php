@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\View\View;
 use AppBundle\Entity\Item;
 
-class ItemController extends FOSRestController
+class ItemController extends BaseApiController
 {
     /**
      * @Get("/store/items")
@@ -23,6 +22,7 @@ class ItemController extends FOSRestController
         if (empty($items)) {
             return new View(["message" => "Items not exists"], Response::HTTP_NO_CONTENT);
         }
+
         return new View($items, Response::HTTP_OK);
     }
 
@@ -33,30 +33,22 @@ class ItemController extends FOSRestController
      */
     public function addItemAction(Request $request)
     {
-        $name = $request->get('name');
-        $price = str_replace([","], ".", $request->get('price'));
+        $data = json_decode($request->getContent());
 
         $item = new Item();
-        $item->setName($name);
-        $item->setPrice($price);
+        $item->setName($data->name);
+        $item->setPrice(str_replace([","], ".", $data->price));
 
-        $validator = $this->get('validator');
-        $errors = $validator->validate($item);
+        $errors = $this->validator($item);
 
-        if(count($errors) > 0) {
-            $errorMessages = [];
-            foreach ($errors as $error) {
-                $errorMessages[] = $error->getMessage();
-            }
-
-            return new View(["errorMessages" => $errorMessages], Response::HTTP_BAD_REQUEST);
+        if($errors) {
+            return new View(["errorMessages" => $errors], Response::HTTP_BAD_REQUEST);
         }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($item);
         $em->flush();
 
-        $data = ["name" => $name, "price" => $price];
-        return new View($data, Response::HTTP_CREATED);
+        return new View($item, Response::HTTP_CREATED);
     }
 }

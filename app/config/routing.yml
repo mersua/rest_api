@@ -5,3 +5,7 @@ user:
 item:
     resource: 'AppBundle\Controller\ItemController'
     type: rest
+
+order:
+    resource: 'AppBundle\Controller\OrderController'
+    type: rest
