@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -25,6 +26,19 @@ class User
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, options={"comment":"User name"})
+     *
+     * @Assert\Length(
+     *     min = 5,
+     *     max = 255,
+     *     minMessage = "User's name must be at least {{ limit }} characters long",
+     *     maxMessage = "User's name cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\NotNull(
+     *     message = "Name should not be null"
+     * )
+     * @Assert\NotBlank(
+     *     message = "Name should not be blank"
+     * )
      */
     private $name;
 
@@ -32,6 +46,10 @@ class User
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", options={"comment":"Prefill after create"})
+     *
+     * @Assert\NotBlank(
+     *     message = "Create date should not be blank"
+     * )
      */
     private $created;
 

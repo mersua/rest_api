@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Item
@@ -25,6 +26,19 @@ class Item
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, options={"comment":"Item name"})
+     *
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 255,
+     *      minMessage = "Item's name must be at least {{ limit }} characters long",
+     *      maxMessage = "Item's name cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\NotNull(
+     *     message = "Name should not be null"
+     * )
+     * @Assert\NotBlank(
+     *     message = "Name should not be blank"
+     * )
      */
     private $name;
 
@@ -32,9 +46,16 @@ class Item
      * @var string
      *
      * @ORM\Column(name="price", type="decimal", precision=10, scale=2, options={"comment":"Item Price"})
+     *
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Price should be greater than {{ compared_value }}"
+     * )
+     * @Assert\NotNull(
+     *     message = "Price should not be null"
+     * )
      */
     private $price;
-
 
     /**
      * Get id

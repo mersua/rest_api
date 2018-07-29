@@ -92,6 +92,8 @@ fos_rest:
         view_response_listener: 'force'
         formats:
             json: true
+    routing_loader:
+        default_format: json
 
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/DoctrineMigrations"
