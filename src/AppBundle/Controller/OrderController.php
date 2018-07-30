@@ -22,7 +22,7 @@ class OrderController extends BaseApiController
         $orders = $this->getDoctrine()->getRepository('AppBundle:Orders')->findAll();
 
         if (empty($orders)) {
-            return new View(["message" => "Orders not exists"], Response::HTTP_NO_CONTENT);
+            return new View(["message" => "Orders do not exist"], Response::HTTP_NO_CONTENT);
         }
 
         return new View($orders, Response::HTTP_OK);

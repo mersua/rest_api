@@ -1,6 +1,217 @@
 Symfony Standard Edition
 ========================
 
+**Deploying**:
+
+  * Clone Github public repository to your local machine: "git clone ssh://git@github.com:mersua/rest_api".
+  * Go to root directory of project: "cd rest_api"
+  * Install all dependencies: "composer update"
+  * Database should create in migrations: "php bin/console doctrine:migrations:migrate"
+  * There is tests for User's and Item's endpoints (run: "phpunit" in root directory of project)
+
+**API routes**:
+
+*User:
+  * Get list of users:
+    * Request method: GET
+    * Request URL: store/users
+    * Response example: 
+        1. Users exist:
+        Response Code: 200 
+        [
+            {
+                "id":1,
+                "name":"User_1",
+                "created":"2018-07-30T00:28:47+03:00"
+            },
+            {
+                "id":2,
+                "name":"User_2",
+                "created":"2018-07-30T00:28:55+03:00"
+            },
+            {
+                "id":3,
+                "name":"TestUser",
+                "created":"2018-07-30T09:58:59+03:00"
+            }
+        ]
+        2. Users do not exist:
+        Response Code: 204 
+        {
+            "message":"Users do not exist"
+        }
+        
+  * Add new user:
+    * Request method: POST
+    * Request URL: store/user
+    * Request example:
+        {
+            "name":"New User"
+        }
+    * Response example:
+        1. User added successfully:
+        Response Code: 201 
+        {
+            "id":5,
+            "name":"New User",
+            "created":"2018-07-30T00:28:47+03:00"
+        }
+        2. User did not add
+        Response Code: 400
+        {
+            "errorMessages":"validation errors..."
+        }
+        
+*Item:
+  * Get list of items:
+    * Request method: GET
+    * Request URL: store/items
+    * Response example: 
+        1. Items exist:
+        Response Code: 200 
+        [
+            {
+                "id":1,
+                "name":"Product_1",
+                "price":100.75
+            },
+            {
+                "id":2,
+                "name":"Product_2",
+                "price":47.15
+            },
+            {
+                "id":3,
+                "name":"Product_3",
+                "price":25.00
+            }
+        ]
+        2. Items do not exist:
+        Response Code: 204 
+        {
+            "message":"Items do not exist"
+        }
+        
+  * Add new item:
+    * Request method: POST
+    * Request URL: store/item
+    * Request example:
+        {
+            "name":"New Product",
+            "price":50.10
+        }
+    * Response example:
+        1. Item added successfully:
+        Response Code: 201 
+        {
+            "id":7,
+            "name":"New Product",
+            "price":50.10
+        }
+        2. Item did not add
+        Response Code: 400
+        {
+            "errorMessages":"validation errors..."
+        }
+        
+*Order:
+  * Get list of orders:
+    * Request method: GET
+    * Request URL: store/orders
+    * Response example: 
+        1. Orders exist:
+        Response Code: 200 
+        [
+            {
+                "id":1,
+                "name":"someOrder",
+                "created":"2018-07-30T00:29:44+03:00",
+                "updated":"2018-07-30T00:29:44+03:00",
+                "total_quantity":4,
+                "total_price":54002,
+                "user":
+                {
+                    "id":2,
+                    "name":"User_2",
+                    "created":"2018-07-30T00:28:55+03:00"
+                },
+                "items":
+                [
+                    {
+                        "id":1,
+                        "name":"mersedes",
+                        "price":12000.75
+                    },
+                    {
+                        "id":2,
+                        "name":"BMW_UNIVERSAL",
+                        "price":15000.25
+                    }
+                ]
+            }     
+        ]
+        2. Order do not exist:
+        Response Code: 204 
+        {"message":"orders do not exist"}
+        
+  * Add new order:
+    * Request method: POST
+    * Request URL: store/order
+    * Request example:
+        {
+            "name":"New Order",
+            "user":
+            {
+                "id":2
+            },
+            “items”: 
+            [
+                {
+                    "id":1, 
+                    "qty":3
+                },
+                {
+                    "id":5, 
+                    "qty":3
+                }
+            ]
+        }
+    * Response example:
+        1. Order added successfully:
+        Response Code: 201 
+        {
+            "id":3,
+            "name":"New Order",
+            "created":"2018-07-30T00:29:44+03:00",
+            "updated":"2018-07-30T00:29:44+03:00",
+            "total_quantity":6,
+            "total_price":81004.5,
+            "user":
+            {
+                "id":2,
+                "name":"User_2",
+                "created":"2018-07-30T00:28:55+03:00"
+            },
+            "items":
+            [
+                {
+                    "id":1,
+                    "name":"mersedes",
+                    "price":12000.75
+                },
+                {
+                    "id":5,
+                    "name":"BMW_UNIVERSAL",
+                    "price":15000.25
+                }
+            ]
+        }
+        2. Order did not add
+        Response Code: 400
+        {
+            "errorMessages":"validation errors..."
+        }
+
 **WARNING**: This distribution does not support Symfony 4. See the
 [Installing & Setting up the Symfony Framework][15] page to find a replacement
 that fits you best.

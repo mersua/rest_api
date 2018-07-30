@@ -20,7 +20,7 @@ class UserController extends BaseApiController
         $users = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
 
         if (empty($users)) {
-            return new View(["message" => "Users not exists"], Response::HTTP_NO_CONTENT);
+            return new View(["message" => "Users do not exist"], Response::HTTP_NO_CONTENT);
         }
 
         return new View($users, Response::HTTP_OK);

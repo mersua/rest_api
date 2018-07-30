@@ -20,7 +20,7 @@ class ItemController extends BaseApiController
         $items = $this->getDoctrine()->getRepository('AppBundle:Item')->findAll();
 
         if (empty($items)) {
-            return new View(["message" => "Items not exists"], Response::HTTP_NO_CONTENT);
+            return new View(["message" => "Items do not exist"], Response::HTTP_NO_CONTENT);
         }
 
         return new View($items, Response::HTTP_OK);
