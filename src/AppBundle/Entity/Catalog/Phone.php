@@ -3,6 +3,7 @@
 namespace AppBundle\Entity\Catalog;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
@@ -21,6 +22,19 @@ class Phone extends BaseProduct
      * @ORM\Column(name="model", type="string", length=255)
      * @Groups({"phone"})
      * @Expose
+     *
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Model must be at least {{ limit }} characters long",
+     *      maxMessage = "Model name cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\NotNull(
+     *     message = "Model should not be null"
+     * )
+     * @Assert\NotBlank(
+     *     message = "Model should not be blank"
+     * )
      */
     private $model;
 
@@ -28,6 +42,19 @@ class Phone extends BaseProduct
      * @ORM\Column(name="os", type="string", length=255)
      * @Groups({"phone"})
      * @Expose
+     *
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 255,
+     *      minMessage = "OS must be at least {{ limit }} characters long",
+     *      maxMessage = "OS cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\NotNull(
+     *     message = "OS should not be null"
+     * )
+     * @Assert\NotBlank(
+     *     message = "OS should not be blank"
+     * )
      */
     private $os;
 
@@ -35,6 +62,14 @@ class Phone extends BaseProduct
      * @ORM\Column(name="diagonal", type="decimal", precision=3, scale=2)
      * @Groups({"phone"})
      * @Expose
+     *
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Diagonal of screen should be greater than {{ compared_value }}"
+     * )
+     * @Assert\NotNull(
+     *     message = "Diagonal should not be null"
+     * )
      */
     private $diagonal;
 
@@ -42,6 +77,14 @@ class Phone extends BaseProduct
      * @ORM\Column(name="weight", type="decimal", precision=5, scale=2)
      * @Groups({"phone"})
      * @Expose
+     *
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Weight should be greater than {{ compared_value }}"
+     * )
+     * @Assert\NotNull(
+     *     message = "Weight should not be null"
+     * )
      */
     private $weight;
 

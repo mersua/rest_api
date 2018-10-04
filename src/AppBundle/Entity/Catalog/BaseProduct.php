@@ -3,6 +3,7 @@
 namespace AppBundle\Entity\Catalog;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -25,6 +26,19 @@ abstract class BaseProduct
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Product's name must be at least {{ limit }} characters long",
+     *      maxMessage = "Product's name cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\NotNull(
+     *     message = "Name should not be null"
+     * )
+     * @Assert\NotBlank(
+     *     message = "Name should not be blank"
+     * )
      */
     private $name;
 
@@ -32,13 +46,34 @@ abstract class BaseProduct
      * @var string
      *
      * @ORM\Column(name="manufacturer", type="string", length=255)
+     *
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Manufacturer must be at least {{ limit }} characters long",
+     *      maxMessage = "Manufacturer cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\NotNull(
+     *     message = "Manufacturer should not be null"
+     * )
+     * @Assert\NotBlank(
+     *     message = "Manufacturer should not be blank"
+     * )
      */
     private $manufacturer;
 
     /**
-     * @var string
+     * @var double
      *
      * @ORM\Column(name="price", type="decimal", precision=10, scale=2)
+     *
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Price should be greater than {{ compared_value }}"
+     * )
+     * @Assert\NotNull(
+     *     message = "Price should not be null"
+     * )
      */
     private $price;
 

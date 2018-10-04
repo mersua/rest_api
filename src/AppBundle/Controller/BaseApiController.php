@@ -38,7 +38,21 @@ class BaseApiController extends FOSRestController
      */
     protected function serialize($data)
     {
-        return $this->container->get('jms_serializer')
+        return $this->container
+            ->get('jms_serializer')
             ->serialize($data, 'json');
+    }
+
+    /**
+     * @param string $inputStr
+     * @param string $typeName
+     * @param string $format
+     * @return mixed
+     */
+    protected function deserialize($inputStr, $typeName, $format)
+    {
+        return $this->container
+            ->get('jms_serializer')
+            ->deserialize($inputStr, $typeName, $format);
     }
 }
