@@ -1,0 +1,20 @@
+AppBundle\Entity\Catalog\Phone:
+  exclusion_policy: ALL
+    group: phone
+    properties:
+      id:
+        expose: true
+      name:
+        expose: true
+      manufacturer:
+        expose: true
+      price:
+        expose: true
+      model:
+        expose: true
+      os:
+        expose: true
+      diagonal:
+        expose: true
+      weight:
+        expose: true

@@ -4,37 +4,44 @@ namespace AppBundle\Entity\Catalog;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\VirtualProperty;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+
 /**
  * @ORM\Entity
+ * @ExclusionPolicy("all")
  */
 class Phone extends BaseProduct
 {
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="model", type="string", length=255)
+     * @Groups({"phone"})
+     * @Expose
      */
     private $model;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="os", type="string", length=255)
+     * @Groups({"phone"})
+     * @Expose
      */
     private $os;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="diagonal", type="decimal", precision=3, scale=2)
+     * @Groups({"phone"})
+     * @Expose
      */
     private $diagonal;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="weight", type="decimal", precision=5, scale=2)
+     * @Groups({"phone"})
+     * @Expose
      */
     private $weight;
 

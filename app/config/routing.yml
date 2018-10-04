@@ -1,11 +1,15 @@
 user:
-    resource: 'AppBundle\Controller\UserController'
-    type: rest
+  resource: 'AppBundle\Controller\UserController'
+  type: rest
 
 item:
-    resource: 'AppBundle\Controller\ItemController'
-    type: rest
+  resource: 'AppBundle\Controller\ItemController'
+  type: rest
 
 order:
-    resource: 'AppBundle\Controller\OrderController'
-    type: rest
+  resource: 'AppBundle\Controller\OrderController'
+  type: rest
+
+product:
+  resource: 'AppBundle\Controller\Catalog\ProductController'
+  type: rest

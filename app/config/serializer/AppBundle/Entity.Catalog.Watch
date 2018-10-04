@@ -1,0 +1,18 @@
+AppBundle\Entity\Catalog\Phone:
+  exclusion_policy: ALL
+    group: watch
+    properties:
+      id:
+        expose: true
+      name:
+        expose: true
+      manufacturer:
+        expose: true
+      price:
+        expose: true
+      gender:
+        expose: true
+      color:
+        expose: true
+      feature:
+        expose: true

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"base_product" = "BaseProduct", "phone" = "Phone", "charger" = "Charger", "watch" = "Watch"})
  */
-class BaseProduct
+abstract class BaseProduct
 {
     /**
      * @var int

@@ -4,23 +4,30 @@ namespace AppBundle\Entity\Catalog;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\VirtualProperty;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+
 /**
  * @ORM\Entity
+ * @ExclusionPolicy("all")
  */
 class Charger extends BaseProduct
 {
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="voltage", type="integer")
+     * @Groups({"charger"})
+     * @Expose
      */
     private $voltage;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="material", type="string", length=255)
+     * @Groups({"charger"})
+     * @Expose
      */
     private $material;
 
