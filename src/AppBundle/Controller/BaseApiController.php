@@ -31,4 +31,14 @@ class BaseApiController extends FOSRestController
 
         return $errorMessages;
     }
+
+    /**
+     * @param mixed $data
+     * @return string
+     */
+    protected function serialize($data)
+    {
+        return $this->container->get('jms_serializer')
+            ->serialize($data, 'json');
+    }
 }

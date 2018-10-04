@@ -13,17 +13,19 @@ class UserController extends BaseApiController
 {
     /**
      * @Get("/store/users")
-     * @return View
+     * @return Response
      */
     public function getUsersAction()
     {
         $users = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
 
         if (empty($users)) {
-            return new View(["message" => "Users do not exist"], Response::HTTP_NO_CONTENT);
+            $errorsJson = $this->serialize(["message" => "Users do not exist"]);
+            return new Response($errorsJson, Response::HTTP_NO_CONTENT);
         }
 
-        return new View($users, Response::HTTP_OK);
+        $jsonData = $this->serialize($users);
+        return new Response($jsonData, Response::HTTP_OK);
     }
 
     /**
