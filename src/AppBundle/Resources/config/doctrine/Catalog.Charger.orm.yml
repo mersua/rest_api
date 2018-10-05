@@ -1,0 +1,8 @@
+AppBundle\Entity\Catalog\Charger:
+  type: entity
+  fields:
+    voltage:
+      type: integer
+    material:
+      type: string
+      length: 255

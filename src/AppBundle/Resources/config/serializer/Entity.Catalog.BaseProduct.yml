@@ -1,0 +1,14 @@
+AppBundle\Entity\Catalog\BaseProduct:
+  exclusion_policy: ALL
+  properties:
+    id:
+      groups: [default, create, update]
+    name:
+      type: string
+      groups: [default, create, update]
+    manufacturer:
+      type: string
+      groups: [default, create, update]
+    price:
+      type: float
+      groups: [default, create, update]

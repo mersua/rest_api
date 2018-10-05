@@ -1,0 +1,27 @@
+AppBundle\Entity\Catalog\BaseProduct:
+  type: entity
+  inheritanceType: SINGLE_TABLE
+  discriminatorColumn:
+    name: type
+    type: string
+  discriminatorMap:
+    base_product: BaseProduct
+    phone: Phone
+    charger: Charger
+    watch: Watch
+  table: base_product
+  id:
+    id:
+      type: integer
+      generator: {strategy: AUTO}
+  fields:
+    name:
+      type: string
+      length: 255
+    manufacturer:
+      type: string
+      length: 255
+    price:
+      type: decimal
+      precision: 10
+      scale: 2

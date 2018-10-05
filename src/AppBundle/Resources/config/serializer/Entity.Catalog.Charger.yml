@@ -1,0 +1,9 @@
+AppBundle\Entity\Catalog\Charger:
+  exclusion_policy: ALL
+  properties:
+    voltage:
+      type: integer
+      groups: [default, create, update]
+    material:
+      type: string
+      groups: [default, create, update]

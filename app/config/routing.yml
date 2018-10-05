@@ -1,15 +1,3 @@
-user:
-  resource: 'AppBundle\Controller\UserController'
-  type: rest
-
-item:
-  resource: 'AppBundle\Controller\ItemController'
-  type: rest
-
-order:
-  resource: 'AppBundle\Controller\OrderController'
-  type: rest
-
-product:
-  resource: 'AppBundle\Controller\Catalog\ProductController'
-  type: rest
+app:
+  resource: '@AppBundle/Resources/config/routing.yml'
+  prefix: /api/v1

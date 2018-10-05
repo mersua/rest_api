@@ -1,0 +1,4 @@
+api_v1_get_phones_all:
+  path: /all
+  controller: AppBundle:Catalog/Phone:getAll
+  methods: [GET]

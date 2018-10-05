@@ -2,26 +2,12 @@
 
 namespace AppBundle\Entity\Catalog;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use JMS\Serializer\Annotation\Expose;
-use JMS\Serializer\Annotation\Groups;
-use JMS\Serializer\Annotation\Exclude;
-use JMS\Serializer\Annotation\VirtualProperty;
-use JMS\Serializer\Annotation\ExclusionPolicy;
-
-/**
- * @ORM\Entity
- * @ExclusionPolicy("all")
- */
 class Charger extends BaseProduct
 {
 
     /**
-     * @ORM\Column(name="voltage", type="integer")
-     * @Groups({"charger"})
-     * @Expose
      * @Assert\GreaterThan(
      *     value = 0,
      *     message = "Voltage of screen should be greater than {{ compared_value }}"
@@ -33,10 +19,6 @@ class Charger extends BaseProduct
     private $voltage;
 
     /**
-     * @ORM\Column(name="material", type="string", length=255)
-     * @Groups({"charger"})
-     * @Expose
-     *
      * @Assert\Length(
      *      min = 3,
      *      max = 255,
@@ -53,10 +35,7 @@ class Charger extends BaseProduct
     private $material;
 
     /**
-     * Set voltage
-     *
      * @param integer $voltage
-     *
      * @return Charger
      */
     public function setVoltage($voltage)
@@ -67,8 +46,6 @@ class Charger extends BaseProduct
     }
 
     /**
-     * Get voltage
-     *
      * @return int
      */
     public function getVoltage()
@@ -77,10 +54,7 @@ class Charger extends BaseProduct
     }
 
     /**
-     * Set material
-     *
      * @param string $material
-     *
      * @return Charger
      */
     public function setMaterial($material)
@@ -91,8 +65,6 @@ class Charger extends BaseProduct
     }
 
     /**
-     * Get material
-     *
      * @return string
      */
     public function getMaterial()

@@ -1,0 +1,15 @@
+AppBundle\Entity\Catalog\Phone:
+  exclusion_policy: ALL
+  properties:
+    model:
+      type: string
+      groups: [default, create, update]
+    os:
+      type: string
+      groups: [default, create, update]
+    diagonal:
+      type: float
+      groups: [default, create, update]
+    weight:
+      type: float
+      groups: [default, create, update]

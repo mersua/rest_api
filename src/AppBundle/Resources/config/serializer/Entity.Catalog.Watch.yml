@@ -1,0 +1,12 @@
+AppBundle\Entity\Catalog\Watch:
+  exclusion_policy: ALL
+  properties:
+    gender:
+      type: string
+      groups: [default, create, update]
+    color:
+      type: string
+      groups: [default, create, update]
+    feature:
+      type: string
+      groups: [default, create, update]

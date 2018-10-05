@@ -2,27 +2,12 @@
 
 namespace AppBundle\Entity\Catalog;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use JMS\Serializer\Annotation\Expose;
-use JMS\Serializer\Annotation\Groups;
-use JMS\Serializer\Annotation\Exclude;
-use JMS\Serializer\Annotation\VirtualProperty;
-use JMS\Serializer\Annotation\ExclusionPolicy;
-
-/**
- * @ORM\Entity
- * @ExclusionPolicy("all")
- */
 class Watch extends BaseProduct
 {
 
     /**
-     * @ORM\Column(name="gender", type="string", length=255)
-     * @Groups({"watch"})
-     * @Expose
-     *
      * @Assert\Length(
      *      min = 3,
      *      max = 255,
@@ -39,10 +24,6 @@ class Watch extends BaseProduct
     private $gender;
 
     /**
-     * @ORM\Column(name="color", type="string", length=255)
-     * @Groups({"watch"})
-     * @Expose
-     *
      * @Assert\Length(
      *      min = 3,
      *      max = 255,
@@ -59,10 +40,6 @@ class Watch extends BaseProduct
     private $color;
 
     /**
-     * @ORM\Column(name="feature", type="string", length=255)
-     * @Groups({"watch"})
-     * @Expose
-     *
      * @Assert\Length(
      *      min = 3,
      *      max = 255,
@@ -79,10 +56,7 @@ class Watch extends BaseProduct
     private $feature;
 
     /**
-     * Set gender
-     *
      * @param string $gender
-     *
      * @return Watch
      */
     public function setGender($gender)
@@ -93,8 +67,6 @@ class Watch extends BaseProduct
     }
 
     /**
-     * Get gender
-     *
      * @return string
      */
     public function getGender()
@@ -103,10 +75,7 @@ class Watch extends BaseProduct
     }
 
     /**
-     * Set color
-     *
      * @param string $color
-     *
      * @return Watch
      */
     public function setColor($color)
@@ -117,8 +86,6 @@ class Watch extends BaseProduct
     }
 
     /**
-     * Get color
-     *
      * @return string
      */
     public function getColor()
@@ -127,10 +94,7 @@ class Watch extends BaseProduct
     }
 
     /**
-     * Set feature
-     *
      * @param string $feature
-     *
      * @return Watch
      */
     public function setFeature($feature)
@@ -141,8 +105,6 @@ class Watch extends BaseProduct
     }
 
     /**
-     * Get feature
-     *
      * @return string
      */
     public function getFeature()

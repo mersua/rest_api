@@ -2,30 +2,17 @@
 
 namespace AppBundle\Entity\Catalog;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"base_product" = "BaseProduct", "phone" = "Phone", "charger" = "Charger", "watch" = "Watch"})
- */
 abstract class BaseProduct
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
      *
      * @Assert\Length(
      *      min = 2,
@@ -45,8 +32,6 @@ abstract class BaseProduct
     /**
      * @var string
      *
-     * @ORM\Column(name="manufacturer", type="string", length=255)
-     *
      * @Assert\Length(
      *      min = 2,
      *      max = 255,
@@ -63,9 +48,7 @@ abstract class BaseProduct
     private $manufacturer;
 
     /**
-     * @var double
-     *
-     * @ORM\Column(name="price", type="decimal", precision=10, scale=2)
+     * @var float
      *
      * @Assert\GreaterThan(
      *     value = 0,
@@ -78,8 +61,6 @@ abstract class BaseProduct
     private $price;
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -88,10 +69,7 @@ abstract class BaseProduct
     }
 
     /**
-     * Set name
-     *
      * @param string $name
-     *
      * @return BaseProduct
      */
     public function setName($name)
@@ -102,8 +80,6 @@ abstract class BaseProduct
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -112,10 +88,7 @@ abstract class BaseProduct
     }
 
     /**
-     * Set manufacturer
-     *
      * @param string $manufacturer
-     *
      * @return BaseProduct
      */
     public function setManufacturer($manufacturer)
@@ -126,8 +99,6 @@ abstract class BaseProduct
     }
 
     /**
-     * Get manufacturer
-     *
      * @return string
      */
     public function getManufacturer()
@@ -136,10 +107,7 @@ abstract class BaseProduct
     }
 
     /**
-     * Set price
-     *
-     * @param string $price
-     *
+     * @param float $price
      * @return BaseProduct
      */
     public function setPrice($price)
@@ -150,9 +118,7 @@ abstract class BaseProduct
     }
 
     /**
-     * Get price
-     *
-     * @return string
+     * @return float
      */
     public function getPrice()
     {

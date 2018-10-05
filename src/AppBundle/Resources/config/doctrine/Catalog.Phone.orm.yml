@@ -1,0 +1,17 @@
+AppBundle\Entity\Catalog\Phone:
+  type: entity
+  fields:
+    model:
+      type: string
+      length: 255
+    os:
+      type: string
+      length: 255
+    diagonal:
+      type: decimal
+      precision: 7
+      scale: 2
+    weight:
+      type: decimal
+      precision: 7
+      scale: 2

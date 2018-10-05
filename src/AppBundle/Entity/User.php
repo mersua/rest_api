@@ -2,15 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * User
- *
- * @ORM\Table(name="user")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- */
 class User
 {
     /**
@@ -24,8 +17,6 @@ class User
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, options={"comment":"User name"})
      *
      * @Assert\Length(
      *     min = 5,
@@ -45,8 +36,6 @@ class User
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created", type="datetime", options={"comment":"Prefill after create"})
-     *
      * @Assert\NotBlank(
      *     message = "Create date should not be blank"
      * )
@@ -59,8 +48,6 @@ class User
     }
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -69,8 +56,6 @@ class User
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      *
      * @return User
@@ -83,8 +68,6 @@ class User
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -93,8 +76,6 @@ class User
     }
 
     /**
-     * Set created
-     *
      * @param \DateTime $created
      *
      * @return User
@@ -107,8 +88,6 @@ class User
     }
 
     /**
-     * Get created
-     *
      * @return \DateTime
      */
     public function getCreated()
