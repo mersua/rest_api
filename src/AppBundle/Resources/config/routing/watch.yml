@@ -1,0 +1,23 @@
+api_v1_get_watch_all:
+  path: /all
+  controller: AppBundle:Catalog/Watch:getAll
+  methods: [GET]
+
+api_v1_add_watch:
+  path: /add
+  controller: AppBundle:Catalog/Watch:add
+  methods: [POST]
+
+api_v1_edit_watch:
+  path: /{id}/edit
+  controller: AppBundle:Catalog/Watch:edit
+  methods: [PUT]
+  requirements:
+    id: \d+
+
+api_v1_delete_watch:
+  path: /{id}/delete
+  controller: AppBundle:Catalog/Watch:delete
+  methods: [DELETE]
+  requirements:
+    id: \d+

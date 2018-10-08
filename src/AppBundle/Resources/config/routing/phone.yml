@@ -1,0 +1,23 @@
+api_v1_get_phones_all:
+  path: /all
+  controller: AppBundle:Catalog/Phone:getAll
+  methods: [GET]
+
+api_v1_add_phone:
+  path: /add
+  controller: AppBundle:Catalog/Phone:add
+  methods: [POST]
+
+api_v1_edit_phone:
+  path: /{id}/edit
+  controller: AppBundle:Catalog/Phone:edit
+  methods: [PUT]
+  requirements:
+    id: \d+
+
+api_v1_delete_phone:
+  path: /{id}/delete
+  controller: AppBundle:Catalog/Phone:delete
+  methods: [DELETE]
+  requirements:
+    id: \d+

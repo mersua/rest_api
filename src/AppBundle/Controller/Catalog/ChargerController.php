@@ -7,9 +7,9 @@ use FOS\RestBundle\Context\Context;
 use JMS\Serializer\DeserializationContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use AppBundle\Entity\Catalog\Phone;
+use AppBundle\Entity\Catalog\Charger;
 
-class PhoneController extends ProductController
+class ChargerController extends ProductController
 {
 
     /**
@@ -17,7 +17,7 @@ class PhoneController extends ProductController
      */
     public function getAllAction()
     {
-        return $this->baseGetAllAction(Phone::class);
+        return $this->baseGetAllAction(Charger::class);
     }
 
     /**
@@ -26,7 +26,7 @@ class PhoneController extends ProductController
      */
     public function addAction(Request $request)
     {
-        return $this->baseAddAction($request, Phone::class);
+        return $this->baseAddAction($request, Charger::class);
     }
 
     /**
@@ -37,36 +37,33 @@ class PhoneController extends ProductController
     public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $phone = $em->getRepository(Phone::class)->find($id);
+        $charger = $em->getRepository(Charger::class)->find($id);
 
-        /** @var Phone $newPhone */
-        $newPhone = $this->get('jms_serializer')->deserialize(
+        /** @var Charger $newCharger */
+        $newCharger = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
-            Phone::class,
+            Charger::class,
             'json',
             DeserializationContext::create()->setGroups(['update'])
         );
 
-        $errors = $this->get('validator')->validate($newPhone, null, ['update']);
+        $errors = $this->get('validator')->validate($newCharger, null, ['update']);
         if (count($errors) > 0) {
             return View::create($errors, Response::HTTP_BAD_REQUEST);
         }
 
-        if($phone) {
-            $phone->setName($newPhone->getName());
-            $phone->setManufacturer($newPhone->getManufacturer());
-            $phone->setPrice($newPhone->getPrice());
-            $phone->setModel($newPhone->getModel());
-            $phone->setOs($newPhone->getOs());
-            $phone->setDiagonal($newPhone->getDiagonal());
-            $phone->setDiagonal($newPhone->getDiagonal());
-            $phone->setWeight($newPhone->getWeight());
+        if($charger) {
+            $charger->setName($newCharger->getName());
+            $charger->setManufacturer($newCharger->getManufacturer());
+            $charger->setPrice($newCharger->getPrice());
+            $charger->setVoltage($newCharger->getVoltage());
+            $charger->setMaterial($newCharger->getMaterial());
 
-            $view = View::create($phone, Response::HTTP_OK);
+            $view = View::create($charger, Response::HTTP_OK);
         } else {
-            $em->persist($phone);
+            $em->persist($charger);
 
-            $view = View::create($phone, Response::HTTP_CREATED);
+            $view = View::create($charger, Response::HTTP_CREATED);
         }
 
         $em->flush();
@@ -82,6 +79,6 @@ class PhoneController extends ProductController
      */
     public function deleteAction($id)
     {
-        return $this->baseDeleteAction($id, Phone::class);
+        return $this->baseDeleteAction($id, Charger::class);
     }
 }

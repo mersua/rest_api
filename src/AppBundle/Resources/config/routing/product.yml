@@ -1,4 +1,18 @@
-api_v1_get_phones_all:
+api_v1_get_products_all:
   path: /all
-  controller: AppBundle:Catalog/Phone:getAll
+  controller: AppBundle:Catalog/Product:baseGetAll
   methods: [GET]
+
+api_v1_get_product_by_id:
+  path: /{id}
+  controller: AppBundle:Catalog/Product:baseGetProductById
+  methods: [GET]
+  requirements:
+    id: \d+
+
+api_v1_delete_product:
+  path: /{id}/delete
+  controller: AppBundle:Catalog/Product:baseDelete
+  methods: [DELETE]
+  requirements:
+    id: \d+

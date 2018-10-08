@@ -8,29 +8,12 @@ class Charger extends BaseProduct
 {
 
     /**
-     * @Assert\GreaterThan(
-     *     value = 0,
-     *     message = "Voltage of screen should be greater than {{ compared_value }}"
-     * )
-     * @Assert\NotNull(
-     *     message = "Voltage should not be null"
-     * )
+     * @var int
      */
     private $voltage;
 
     /**
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 255,
-     *      minMessage = "Material must be at least {{ limit }} characters long",
-     *      maxMessage = "Material cannot be longer than {{ limit }} characters"
-     * )
-     * @Assert\NotNull(
-     *     message = "Material should not be null"
-     * )
-     * @Assert\NotBlank(
-     *     message = "Material should not be blank"
-     * )
+     * @var string
      */
     private $material;
 

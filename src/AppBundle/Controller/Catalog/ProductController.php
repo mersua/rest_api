@@ -3,124 +3,104 @@
 namespace AppBundle\Controller\Catalog;
 
 use AppBundle\Controller\BaseApiController;
-use FOS\RestBundle\Controller\Annotations\Get;
-use FOS\RestBundle\Controller\Annotations\Post;
+use AppBundle\Entity\Catalog\BaseProduct;
+use FOS\RestBundle\View\View;
+use FOS\RestBundle\Context\Context;
+use JMS\Serializer\DeserializationContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use FOS\RestBundle\Controller\Annotations\View;
-use AppBundle\Entity\Catalog\BaseProduct;
-use AppBundle\Entity\Catalog\Phone;
-use AppBundle\Entity\Catalog\Charger;
-use AppBundle\Entity\Catalog\Watch;
-use AppBundle\Repository\Catalog\BaseProductRepository;
 
 class ProductController extends BaseApiController
 {
-    private $productEntity = [
-        "phone" => Phone::class,
-        "charger" => Charger::class,
-        "watch" => Watch::class,
-    ];
-
-    private $baseProductRepository;
-
-    public function __construct(BaseProductRepository $baseProductRepository) {
-        $this->baseProductRepository = $baseProductRepository;
-    }
 
     /**
-     * Get all products
-     * @Get("/store/catalog")
-     * @return Response
+     * @param string $entityClass
+     * @return View
      */
-    public function getProductsAllAction()
+    public function baseGetAllAction($entityClass = BaseProduct::class)
     {
-        $products = $this->baseProductRepository->findProductsAll();
+        $products = $this->getDoctrine()->getRepository($entityClass)->findAll();
 
         if (empty($products)) {
-            $errorsJson = $this->serialize(["message" => "Products do not exist"]);
-            return new Response($errorsJson, Response::HTTP_NO_CONTENT);
+            return new View(["message" => "Products do not exist"], Response::HTTP_NO_CONTENT);
         }
 
-        $jsonData = $this->serialize($products);
-        return new Response($jsonData, Response::HTTP_OK);
+        $view = View::create($products, Response::HTTP_OK);
+        $context = (new Context())->setGroups(['default'])->enableMaxDepth();
+        $view->setContext($context);
+
+        return $view;
     }
 
     /**
-     * Get all product of type (phone or charger or watch only)
-     * @Get("/store/catalog/{type}")
-     * @param string $type (can be only "phone" || "charger" || "watch")
-     * @return Response
-     */
-    public function getProductsAction($type)
-    {
-        $products = $this->getDoctrine()->getRepository($this->productEntity[$type])->findAll();
-
-        if (empty($products)) {
-            $errorsJson = $this->serialize(["message" => "Products do not exist"]);
-            return new Response($errorsJson, Response::HTTP_NO_CONTENT);
-        }
-
-        $jsonData = $this->serialize($products);
-        return new Response($jsonData, Response::HTTP_OK);
-    }
-
-    /**
-     * @Get("/store/catalog/product/{id}", requirements={"id"="\d+"})
      * @param int $id
-     * @return Response
+     * @param string $entityClass
+     * @return View
      */
-    public function getProductsByIdAction($id)
+    public function baseGetProductByIdAction($id, $entityClass = BaseProduct::class)
     {
-        $product = $this->baseProductRepository->findOneProductById($id);
+        $product = $this->getDoctrine()->getRepository($entityClass)->find($id);
 
-        if (empty($product)) {
-            $errorsJson = $this->serialize(["message" => "Product do not exist"]);
-            return new Response($errorsJson, Response::HTTP_NO_CONTENT);
+        if(!$product) {
+            return View::create('The product does not exist!', Response::HTTP_NOT_FOUND);
         }
 
-        $jsonData = $this->serialize($product);
-        return new Response($jsonData, Response::HTTP_OK);
+        $view = View::create($product, Response::HTTP_OK);
+        $context = (new Context())->setGroups(['default'])->enableMaxDepth();
+        $view->setContext($context);
+
+        return $view;
     }
 
     /**
-     * @Post("/store/catalog/{type}/add")
      * @param Request $request
-     * @param string $type (can be only "phone" || "charger" || "watch")
-     * @return Response
+     * @param string $entityClass
+     * @return View
      */
-    public function addProductAction(Request $request, $type)
+    public function baseAddAction(Request $request, $entityClass = BaseProduct::class)
     {
-        $product = $this->deserialize($request->getContent(), $this->productEntity[$type], "json");
 
-        $errors = $this->validator($product);
-        if($errors)
-        {
-            $errorsJson = $this->serialize(["errorMessages" => $errors]);
-            return new Response($errorsJson, Response::HTTP_BAD_REQUEST);
+        /** @var BaseProduct $product */
+        $product = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            $entityClass,
+            'json',
+            DeserializationContext::create()->setGroups(['create'])
+        );
+
+        $errors = $this->get('validator')->validate($product, null, ['create']);
+        if (count($errors) > 0) {
+            return View::create($errors, Response::HTTP_BAD_REQUEST);
         }
 
-        $this->baseProductRepository->addProduct($product);
-        $jsonData = $this->serialize($product);
-        return new Response($jsonData, Response::HTTP_CREATED);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($product);
+        $em->flush();
+
+        $view = View::create($product, Response::HTTP_CREATED);
+        $context = (new Context())->setGroups(['default'])->enableMaxDepth();
+        $view->setContext($context);
+
+        return $view;
     }
 
     /**
-     * @Post("/store/catalog/product/{id}/remove", requirements={"id"="\d+"})
      * @param int $id
-     * @return Response
+     * @param string $entityClass
+     * @return View
      */
-    public function removeProductAction($id)
+    public function baseDeleteAction($id, $entityClass = BaseProduct::class)
     {
-        $product = $this->baseProductRepository->findOneProductById($id);
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository($entityClass)->find($id);
 
-        if (empty($product)) {
-            $errorsJson = $this->serialize(["message" => "Product do not exist"]);
-            return new Response($errorsJson, Response::HTTP_NO_CONTENT);
+        if(!$product) {
+            return View::create('The product does not exist!', Response::HTTP_NOT_FOUND);
         }
 
-        $this->baseProductRepository->removeProduct($product);
-        $jsonData = $this->serialize(["message" => "The Product has been removed successfully!"]);
-        return new Response($jsonData, Response::HTTP_OK);
+        $em->remove($product);
+        $em->flush();
+
+        return View::create('The product was deleted successfully!', Response::HTTP_OK);
     }
 }

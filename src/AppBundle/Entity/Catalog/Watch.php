@@ -8,50 +8,17 @@ class Watch extends BaseProduct
 {
 
     /**
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 255,
-     *      minMessage = "Gender must be at least {{ limit }} characters long",
-     *      maxMessage = "Gender cannot be longer than {{ limit }} characters"
-     * )
-     * @Assert\NotNull(
-     *     message = "Gender should not be null"
-     * )
-     * @Assert\NotBlank(
-     *     message = "Gender should not be blank"
-     * )
+     * @var string
      */
     private $gender;
 
     /**
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 255,
-     *      minMessage = "Color must be at least {{ limit }} characters long",
-     *      maxMessage = "Color cannot be longer than {{ limit }} characters"
-     * )
-     * @Assert\NotNull(
-     *     message = "Color should not be null"
-     * )
-     * @Assert\NotBlank(
-     *     message = "Color should not be blank"
-     * )
+     * @var string
      */
     private $color;
 
     /**
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 255,
-     *      minMessage = "Feature must be at least {{ limit }} characters long",
-     *      maxMessage = "Feature cannot be longer than {{ limit }} characters"
-     * )
-     * @Assert\NotNull(
-     *     message = "Feature should not be null"
-     * )
-     * @Assert\NotBlank(
-     *     message = "Feature should not be blank"
-     * )
+     * @var string
      */
     private $feature;
 

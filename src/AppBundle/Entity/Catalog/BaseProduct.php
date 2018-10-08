@@ -2,8 +2,6 @@
 
 namespace AppBundle\Entity\Catalog;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
 abstract class BaseProduct
 {
     /**
@@ -13,50 +11,16 @@ abstract class BaseProduct
 
     /**
      * @var string
-     *
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 255,
-     *      minMessage = "Product's name must be at least {{ limit }} characters long",
-     *      maxMessage = "Product's name cannot be longer than {{ limit }} characters"
-     * )
-     * @Assert\NotNull(
-     *     message = "Name should not be null"
-     * )
-     * @Assert\NotBlank(
-     *     message = "Name should not be blank"
-     * )
      */
     private $name;
 
     /**
      * @var string
-     *
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 255,
-     *      minMessage = "Manufacturer must be at least {{ limit }} characters long",
-     *      maxMessage = "Manufacturer cannot be longer than {{ limit }} characters"
-     * )
-     * @Assert\NotNull(
-     *     message = "Manufacturer should not be null"
-     * )
-     * @Assert\NotBlank(
-     *     message = "Manufacturer should not be blank"
-     * )
      */
     private $manufacturer;
 
     /**
      * @var float
-     *
-     * @Assert\GreaterThan(
-     *     value = 0,
-     *     message = "Price should be greater than {{ compared_value }}"
-     * )
-     * @Assert\NotNull(
-     *     message = "Price should not be null"
-     * )
      */
     private $price;
 

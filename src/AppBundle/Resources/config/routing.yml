@@ -9,3 +9,15 @@ order:
 product:
   resource: 'routing/product.yml'
   prefix: /product
+
+phone:
+  resource: 'routing/phone.yml'
+  prefix: /product/phone
+
+charger:
+  resource: 'routing/charger.yml'
+  prefix: /product/charger
+
+watch:
+  resource: 'routing/watch.yml'
+  prefix: /product/watch

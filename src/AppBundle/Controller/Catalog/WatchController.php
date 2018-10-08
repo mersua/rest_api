@@ -7,9 +7,9 @@ use FOS\RestBundle\Context\Context;
 use JMS\Serializer\DeserializationContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use AppBundle\Entity\Catalog\Phone;
+use AppBundle\Entity\Catalog\Watch;
 
-class PhoneController extends ProductController
+class WatchController extends ProductController
 {
 
     /**
@@ -17,7 +17,7 @@ class PhoneController extends ProductController
      */
     public function getAllAction()
     {
-        return $this->baseGetAllAction(Phone::class);
+        return $this->baseGetAllAction(Watch::class);
     }
 
     /**
@@ -26,7 +26,7 @@ class PhoneController extends ProductController
      */
     public function addAction(Request $request)
     {
-        return $this->baseAddAction($request, Phone::class);
+        return $this->baseAddAction($request, Watch::class);
     }
 
     /**
@@ -37,36 +37,34 @@ class PhoneController extends ProductController
     public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $phone = $em->getRepository(Phone::class)->find($id);
+        $watch = $em->getRepository(Watch::class)->find($id);
 
-        /** @var Phone $newPhone */
-        $newPhone = $this->get('jms_serializer')->deserialize(
+        /** @var Watch $newWatch */
+        $newWatch = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
-            Phone::class,
+            Watch::class,
             'json',
             DeserializationContext::create()->setGroups(['update'])
         );
 
-        $errors = $this->get('validator')->validate($newPhone, null, ['update']);
+        $errors = $this->get('validator')->validate($newWatch, null, ['update']);
         if (count($errors) > 0) {
             return View::create($errors, Response::HTTP_BAD_REQUEST);
         }
 
-        if($phone) {
-            $phone->setName($newPhone->getName());
-            $phone->setManufacturer($newPhone->getManufacturer());
-            $phone->setPrice($newPhone->getPrice());
-            $phone->setModel($newPhone->getModel());
-            $phone->setOs($newPhone->getOs());
-            $phone->setDiagonal($newPhone->getDiagonal());
-            $phone->setDiagonal($newPhone->getDiagonal());
-            $phone->setWeight($newPhone->getWeight());
+        if($watch) {
+            $watch->setName($newWatch->getName());
+            $watch->setManufacturer($newWatch->getManufacturer());
+            $watch->setPrice($newWatch->getPrice());
+            $watch->setGender($newWatch->getGender());
+            $watch->setColor($newWatch->getColor());
+            $watch->setFeature($newWatch->getFeature());
 
-            $view = View::create($phone, Response::HTTP_OK);
+            $view = View::create($watch, Response::HTTP_OK);
         } else {
-            $em->persist($phone);
+            $em->persist($watch);
 
-            $view = View::create($phone, Response::HTTP_CREATED);
+            $view = View::create($watch, Response::HTTP_CREATED);
         }
 
         $em->flush();
@@ -82,6 +80,6 @@ class PhoneController extends ProductController
      */
     public function deleteAction($id)
     {
-        return $this->baseDeleteAction($id, Phone::class);
+        return $this->baseDeleteAction($id, Watch::class);
     }
 }
