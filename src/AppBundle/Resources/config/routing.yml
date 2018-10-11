@@ -1,11 +1,3 @@
-user:
-  resource: 'routing/user.yml'
-  prefix: /user
-
-order:
-  resource: 'routing/order.yml'
-  prefix: /order
-
 product:
   resource: 'routing/product.yml'
   prefix: /product

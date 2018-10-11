@@ -7,20 +7,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ItemControllerTest extends WebTestCase
 {
-    public function testGetProductsHttpOk()
+    public function testGetProductsHttpUnAuthorized()
     {
         $client = static::createClient();
 
-        $client->request('GET', '/store/catalog');
+        $client->request('GET', '/api/v1/product/all');
 
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $client->getResponse()->getStatusCode());
     }
 
     public function testGetProductsContent()
     {
         $client = static::createClient();
 
-        $client->request('GET', '/store/catalog');
+        $client->request('GET', '/api/v1/product/phone/all');
 
         $this->assertContains(
             'id',
@@ -49,7 +49,7 @@ class ItemControllerTest extends WebTestCase
 
         $client->request(
             'POST',
-            '/store/catalog/charger/add',
+            '/api/v1/product/charger/add',
             array(),
             array(),
             array('CONTENT_TYPE' => 'application/json'),
@@ -65,7 +65,7 @@ class ItemControllerTest extends WebTestCase
 
         $client->request(
             'POST',
-            '/store/catalog/charger/add',
+            '/api/v1/product/charger/add',
             array(),
             array(),
             array('CONTENT_TYPE' => 'application/json'),
@@ -81,7 +81,7 @@ class ItemControllerTest extends WebTestCase
 
         $client->request(
             'POST',
-            '/store/catalog/product/4/remove',
+            '/api/v1/product/7/delete',
             array(),
             array(),
             array('CONTENT_TYPE' => 'application/json'),
@@ -89,7 +89,7 @@ class ItemControllerTest extends WebTestCase
         );
 
         $this->assertContains(
-            'The Product has been removed successfully!',
+            'The product was deleted successfully!',
             $client->getResponse()->getContent()
         );
     }
