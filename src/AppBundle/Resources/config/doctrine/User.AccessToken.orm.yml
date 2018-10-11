@@ -1,0 +1,16 @@
+AppBundle\Entity\User\AccessToken:
+    type: entity
+    table: oauth2_access_token
+    repositoryClass: AppBundle\Repository\User\AccessTokenRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\User\Client
+        user:
+            targetEntity: AppBundle\Entity\User\User
+    lifecycleCallbacks: {  }

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Catalog;
 
+use AppBundle\Entity\User\User;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Context\Context;
 use JMS\Serializer\DeserializationContext;
@@ -36,6 +37,13 @@ class WatchController extends ProductController
      */
     public function editAction(Request $request, $id)
     {
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if(!$user->isAdminRole()) {
+            return View::create("Access denied!", Response::HTTP_UNAUTHORIZED);
+        }
+
+
         $em = $this->getDoctrine()->getManager();
         $watch = $em->getRepository(Watch::class)->find($id);
 

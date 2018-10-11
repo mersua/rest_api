@@ -30,6 +30,8 @@ framework:
   assets: ~
   php_errors:
     log: true
+  templating:
+    engines: ['twig']
 
 # Twig Configuration
 twig:
@@ -39,7 +41,7 @@ twig:
 # Doctrine Configuration
 doctrine:
   dbal:
-    driver: '%database_driver%'
+    driver: pdo_mysql
     host: '%database_host%'
     port: '%database_port%'
     dbname: '%database_name%'
@@ -99,3 +101,22 @@ doctrine_migrations:
 jms_serializer:
   metadata:
     auto_detection: true
+
+nelmio_api_doc: ~
+
+fos_user:
+  db_driver: orm
+  firewall_name: api
+  user_class: AppBundle\Entity\User\User
+  from_email:
+    address: "%env(resolve:MAILER_USER)%"
+    sender_name: "%env(resolve:MAILER_USER)%"
+
+fos_oauth_server:
+  db_driver: orm
+  client_class: AppBundle\Entity\User\Client
+  access_token_class: AppBundle\Entity\User\AccessToken
+  refresh_token_class: AppBundle\Entity\User\RefreshToken
+  auth_code_class: AppBundle\Entity\User\AuthCode
+  service:
+    user_provider: fos_user.user_provider.username

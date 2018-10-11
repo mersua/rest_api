@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Catalog;
 
 use AppBundle\Controller\BaseApiController;
 use AppBundle\Entity\Catalog\BaseProduct;
+use AppBundle\Entity\User\User;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Context\Context;
 use JMS\Serializer\DeserializationContext;
@@ -59,6 +60,11 @@ class ProductController extends BaseApiController
      */
     public function baseAddAction(Request $request, $entityClass = BaseProduct::class)
     {
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if(!$user->isAdminRole()) {
+            return View::create("Access denied!", Response::HTTP_UNAUTHORIZED);
+        }
 
         /** @var BaseProduct $product */
         $product = $this->get('jms_serializer')->deserialize(
@@ -91,6 +97,12 @@ class ProductController extends BaseApiController
      */
     public function baseDeleteAction($id, $entityClass = BaseProduct::class)
     {
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if(!$user->isAdminRole()) {
+            return View::create("Access denied!", Response::HTTP_UNAUTHORIZED);
+        }
+
         $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository($entityClass)->find($id);
 

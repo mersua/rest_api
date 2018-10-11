@@ -1,0 +1,16 @@
+AppBundle\Entity\User\AuthCode:
+    type: entity
+    table: oauth2_auth_codes
+    repositoryClass: AppBundle\Repository\User\AuthCodeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\User\Client
+        user:
+            targetEntity: AppBundle\Entity\User\User
+    lifecycleCallbacks: {  }
