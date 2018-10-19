@@ -2,7 +2,7 @@ AppBundle\Entity\Catalog\BaseProduct:
   exclusion_policy: ALL
   properties:
     id:
-      groups: [default, create, update]
+      groups: [default, update]
     name:
       type: string
       groups: [default, create, update]
